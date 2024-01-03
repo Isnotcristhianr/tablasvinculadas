@@ -20,3 +20,19 @@ ORDEN EJECUCION SQL:
 2. FROM
 3. WHERE
 4. TABLAS VINCULADAS
+
+## consultas con tablas temporales
+
+~~~
+WITH est_cte as(
+
+    SELECT 
+    e.est_nombre,
+    e.est_nota,
+    DENSE_RANK() OVER( ORDER BY E.est_nota DESC) AS row_num
+    FROM `tbl_estudiantes` as e
+    
+ )
+ SELECT * FROM est_cte WHERE row_num <= 3;
+
+~~~
