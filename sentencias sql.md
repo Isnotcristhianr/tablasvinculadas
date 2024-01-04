@@ -71,3 +71,35 @@ WITH est_cte as(
  )
  SELECT * FROM est_cte WHERE est_nota > prom;
  ~~~
+
+ ## reto
+ ~~~
+ WITH est_cte as(
+
+    SELECT 
+    e.est_nota,
+    e.est_nota2,
+    e.est_nota3
+    AVG(e.est_nota+est_nota2+est_nota3) OVER() as prom,
+   ROW_NUMBER() OVER( ORDER BY prom ASC) AS PEOR
+    FROM `tbl_estudiantes` as e
+    
+ )
+ SELECT * FROM est_cte WHERE  PEOR <= 3;
+~~~
+
+## solucion reto
+~~~
+WITH est_cte AS (
+    SELECT 
+        e.est_nota,
+        e.est_nota2,
+        e.est_nota3,
+        (e.est_nota + e.est_nota2 + e.est_nota3) / 3.0 AS prom,
+        ROW_NUMBER() OVER (ORDER BY PROM ASC) AS MEJOR
+    FROM 
+        `tbl_estudiantes` as e
+)
+
+SELECT * FROM est_cte WHERE MEJOR <= 3;
+~~~
