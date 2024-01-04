@@ -36,3 +36,24 @@ WITH est_cte as(
  SELECT * FROM est_cte WHERE row_num <= 3;
 
 ~~~
+
+## PEOR NOTA
+
+~~~
+WITH est_cte as(
+
+    SELECT 
+    e.est_nombre,
+    e.est_nota,
+    ROW_NUMBER() OVER( ORDER BY E.est_nota ASC) AS PEOR
+    FROM `tbl_estudiantes` as e
+ )
+ SELECT * FROM est_cte WHERE PEOR <= 3;
+ ~~~
+
+ ## PROMEDIO
+ ~~~
+ SELECT 
+    AVG(e.est_nota) as PROM
+    FROM tbl_estudiantes as e;
+~~~
