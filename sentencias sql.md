@@ -57,3 +57,17 @@ WITH est_cte as(
     AVG(e.est_nota) as PROM
     FROM tbl_estudiantes as e;
 ~~~
+
+## MEJOR PROMEDIO CON TABLA TEMPORAL
+~~~
+WITH est_cte as(
+
+    SELECT 
+    e.est_nombre,
+    e.est_nota,
+    AVG(e.est_nota) OVER() as prom
+    FROM `tbl_estudiantes` as e
+    
+ )
+ SELECT * FROM est_cte WHERE est_nota > prom;
+ ~~~
