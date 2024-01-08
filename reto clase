@@ -1,0 +1,13 @@
+# 3
+
+~~~
+WITH cteVentas AS(
+    SELECT v.VENT_PRECIO_VENDIDO,
+           ROW_NUMBER() OVER( ORDER BY VENT_PRECIO_VENDIDO) AS orden
+    FROM tbl_ventas as v
+)
+SELECT VENT_PRECIO_VENDIDO
+FROM cteVentas
+WHERE orden <= 5
+ORDER BY orden;
+~~~

@@ -103,3 +103,12 @@ WITH est_cte AS (
 
 SELECT * FROM est_cte WHERE MEJOR <= 3;
 ~~~
+
+
+WITH vent_cte as(
+    SELECT 
+    v.VENT_PRECIO_VENDIDO
+    FROM tbl_ventas as v,
+    DENSE_RANK() OVER( ORDER BY v.EMP_ID DESC) AS d
+ )
+ SELECT * FROM vent_cte WHERE VENT_PRECIO_VENDIDO > MIN(VENT_PRECIO_VENDIDO)
