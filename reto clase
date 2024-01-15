@@ -1,13 +1,34 @@
-# 3
+# Retos
 
+## Listado de vendedores con el valor vendido
 ~~~
-WITH cteVentas AS(
-    SELECT v.VENT_PRECIO_VENDIDO,
-           ROW_NUMBER() OVER( ORDER BY VENT_PRECIO_VENDIDO) AS orden
-    FROM tbl_ventas as v
-)
-SELECT VENT_PRECIO_VENDIDO
-FROM cteVentas
-WHERE orden <= 5
-ORDER BY orden;
+SELECT
+	emp_nombre,
+	emp_apellido,
+	vent_precio_vendido 
+FROM tbl_ventas
+INNER JOIN tbl_empleados ON tbl_empleados.emp_id = tbl_ventas.emp_id;
+~~~
+
+## Listado de los 5 mejores vendedores, tomar en cuenta cantidad de ventas
+~~~
+SELECT 
+	tbl_empleados.emp_nombre,
+    tbl_empleados.emp_apellido,
+    tbl_ventas.EMP_ID, 
+COUNT(*) AS CANTIDAD_VENTAS FROM tbl_ventas
+INNER JOIN tbl_empleados ON tbl_empleados.emp_id = tbl_ventas.emp_id
+GROUP BY EMP_ID ORDER BY COUNT(*) DESC LIMIT 5;
+~~~
+
+## Listado de los 5 mejores vendedores, tomar en cuenta el valor total vendido por vendedor
+~~~
+SELECT 
+	tbl_empleados.emp_nombre, 
+    tbl_empleados.emp_apellido,
+    tbl_ventas.EMP_ID, 
+SUM(tbl_ventas.VENT_PRECIO_VENDIDO) AS TOTAL_VENDIDO
+FROM tbl_ventas
+INNER JOIN tbl_empleados ON tbl_empleados.emp_id = tbl_ventas.emp_id
+GROUP BY EMP_ID ORDER BY COUNT(*) DESC LIMIT 5;
 ~~~
